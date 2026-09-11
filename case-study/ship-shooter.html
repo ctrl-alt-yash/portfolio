@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ship Shooter - Case Study</title>
+  <link rel="stylesheet" href="case-study.css">
+</head>
+
+<body>
+<div class="case-study">
+  <a href="../index.html" class="back-button">← Back to Home</a>
+  <div class="case-study-header">
+    <div class="case-study-subtitle">Ship Shooter</div>
+    <h1 class="case-study-title">A Game About the Sea, Built Behind a Design Filter</h1>
+    <div class="case-study-meta">Solo Developer · Swift + SpriteKit · iOS and macOS · 2026</div>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">Overview</h2>
+    <div class="overview-box">
+      <p>
+        A casual, pick-up-and-play game about the sea, ships, and tales — the curiosity of the first people who sailed past the horizon without knowing what was beyond it. Built in SpriteKit with a single shared game core driving both iOS and macOS.
+      </p>
+      <p>
+        Mechanically it is a <strong>pseudo-3D perspective sea</strong> you sail toward a horizon, built on one verb: steering. You dodge, take hull damage, and salvage. Shooting, despite the name, is deliberately deferred to a much later upgrade — the core loop is dodge-first.
+      </p>
+      <p>
+        The part I would actually point at in a review is the process. Every feature must pass a written four-question <strong>Soul Filter</strong> before it gets built, and ideas that fail are parked in their own document rather than argued about twice.
+      </p>
+    </div>
+
+    <div class="tech-stack">
+      <span class="tech-badge">Swift</span>
+      <span class="tech-badge">SpriteKit</span>
+      <span class="tech-badge">iOS</span>
+      <span class="tech-badge">macOS</span>
+      <span class="tech-badge">Xcode</span>
+      <span class="tech-badge">Game Design</span>
+    </div>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">Problem &amp; Solution</h2>
+    <div class="problem-solution-grid">
+      <div class="ps-card problem">
+        <h4>The Problem</h4>
+        <ul>
+          <li>Solo side projects die from unbounded feature creep</li>
+          <li>Every good idea feels worth building in the moment</li>
+          <li>Casual games drift into progression-system bloat</li>
+          <li>Two platforms usually means two diverging codebases</li>
+          <li>Past reasoning gets lost, so decisions get relitigated</li>
+        </ul>
+      </div>
+      <div class="ps-card solution">
+        <h4>The Solution</h4>
+        <ul>
+          <li>A written vision document every feature answers to</li>
+          <li>A four-gate filter applied before any work starts</li>
+          <li>Good ideas that fail the filter are parked, not argued</li>
+          <li>One shared game core; platform folders are thin shells</li>
+          <li>An append-only decision log recording the why</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">The Soul Filter</h2>
+    <div class="role-section">
+      <h4>Four Gates Every Feature Must Pass</h4>
+      <ul>
+        <li>Does it serve the soul — the sea, ships, tales, the horizon, the fool who sails on anyway?</li>
+        <li>Is it casual and pick-up-and-play, or does it demand a session the game was not built for?</li>
+        <li>Does it add meaning without saturation, avoiding the busywork bloat that buries casual games?</li>
+        <li>Would it be painful to remove later — and if not, why build it at all?</li>
+        <li>A good idea that fails any gate is an idea for a different game, and goes to the parked-ideas document intact</li>
+        <li>Three non-negotiables sit above the filter: iOS stays primary and nothing dilutes it, offline play works and progress syncs across devices, and feel comes before systems</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">Key Highlights</h2>
+    <div class="highlights-grid">
+      <div class="highlight-card">
+        <div class="highlight-label">Perspective Sea</div>
+        <div class="highlight-text">A pseudo-3D sea rendered in 2D SpriteKit, sailed toward a receding horizon, carrying the full dodge, hull-damage, and salvage loop</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">One Verb</div>
+        <div class="highlight-text">The entire mechanical vocabulary is built on steering alone — whirlpools are a pull you fight by steering, with currents, wind, and creature encounters designed against the same single input</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Escalating Pressure</div>
+        <div class="highlight-text">Waves damage and slow the ship, and stiffen the further out you sail, tying difficulty to distance and creating the seam that a future upgrade system plugs into</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">The Pull</div>
+        <div class="highlight-text">A thing on the horizon revealed only after some progress, giving the player a reason to keep sailing that comes from curiosity rather than a score counter</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Shared Core</div>
+        <div class="highlight-text">Roughly 1,100 lines of Swift across a sea model and scene, shared by both platform targets, with the iOS and macOS folders kept as thin app shells</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Docs as Code</div>
+        <div class="highlight-text">Nine living documents covering vision, design, concepts, roadmap, decisions, architecture, references, and parked ideas — a disagreement between code and docs is treated as a bug</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">Technical &amp; Process Approach</h2>
+    <ul class="bullets">
+      <li>Built a pseudo-3D perspective projection on top of a 2D sprite framework, getting depth and horizon motion without the cost and complexity of a real 3D engine</li>
+      <li>Kept all game logic in a single shared source folder consumed by both platform targets, so the macOS build cannot drift into a second implementation</li>
+      <li>Sequenced milestones feel-first: sailing, then stakes, then the sea itself, then a reason to sail on, and only afterwards the mechanical vocabulary — materials and upgrades come after the verbs feel right, not before</li>
+      <li>Wrote a vision document explicitly designated as the highest authority in the project, so feature arguments resolve against a written standard instead of whoever argued last</li>
+      <li>Maintained an append-only decision log recording not just what was chosen but why, letting a renumbered milestone plan stay navigable rather than becoming misleading</li>
+      <li>Set an explicit tuning policy of one balance pass before the art milestone, with a rule to fix only the obviously broken mid-milestone — a guard against tuning paralysis</li>
+      <li>Deferred atmosphere work to a later day-night and weather milestone rather than letting visual polish creep into a mechanics milestone</li>
+      <li>Left shooting out of the core loop despite the project's own name, because the filter said the game is about the sea rather than combat</li>
+    </ul>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">What This Demonstrates</h2>
+    <ul class="bullets">
+      <li><strong>Scope Discipline:</strong> Built an explicit mechanism for saying no, and honoured it even against the feature the project is named after</li>
+      <li><strong>Design Before Code:</strong> Established the intended feeling first and made every technical decision answerable to it, rather than discovering the game by accident</li>
+      <li><strong>Decision Documentation:</strong> Recorded reasoning as it happened, so past choices can be revisited on their merits instead of from memory</li>
+      <li><strong>Cross-Platform Architecture:</strong> Structured iOS and macOS targets around one shared core, making divergence a deliberate act rather than a default drift</li>
+      <li><strong>Graphics Pragmatism:</strong> Achieved a sense of depth and distance within a 2D framework by choosing the projection carefully instead of reaching for a heavier engine</li>
+      <li><strong>Working Outside the Comfort Zone:</strong> A Swift and SpriteKit game built by a backend engineer, with the process rigour carried across from production work</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>

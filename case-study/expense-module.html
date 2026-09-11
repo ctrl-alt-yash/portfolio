@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Module - Case Study</title>
+  <link rel="stylesheet" href="case-study.css">
+</head>
+
+<body>
+<div class="case-study">
+  <a href="../index.html" class="back-button">← Back to Home</a>
+  <div class="case-study-header">
+    <div class="case-study-subtitle">Expense Module</div>
+    <h1 class="case-study-title">Reading Handwritten Grocery Slips Into a Household Ledger</h1>
+    <div class="case-study-meta">Solo Engineer · Next.js + Vision LLM · May – Sep 2026</div>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">Overview</h2>
+    <div class="overview-box">
+      <p>
+        Household expense tracking built as a second sub-app inside the same private family application as the <a href="./tenant-manager.html" style="color:#1D9E75;font-weight:500;">tenant manager</a>. Expenses are logged against a catalogue of items and categories, then rolled up into monthly summaries with category breakdowns and analytics.
+      </p>
+      <p>
+        The feature worth talking about is <strong>Scan slip</strong>. Household spending in this family is written on paper in a running list — Hinglish item names, day-first dates, several days per page. Rather than asking anyone to retype that, you photograph the page and a vision model reads it into draft rows you correct before saving.
+      </p>
+      <p>
+        Nothing from the photograph reaches the database directly. Every line lands on a review screen first, uncertain readings are flagged, and the slip's own written total is checked against the sum of the parsed lines.
+      </p>
+    </div>
+
+    <div class="tech-stack">
+      <span class="tech-badge">Next.js 16</span>
+      <span class="tech-badge">React 19</span>
+      <span class="tech-badge">TypeScript</span>
+      <span class="tech-badge">Claude API</span>
+      <span class="tech-badge">Gemini API</span>
+      <span class="tech-badge">Supabase</span>
+      <span class="tech-badge">Zod</span>
+      <span class="tech-badge">PWA</span>
+    </div>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">Problem &amp; Solution</h2>
+    <div class="problem-solution-grid">
+      <div class="ps-card problem">
+        <h4>The Problem</h4>
+        <ul>
+          <li>Spending recorded on paper in handwritten running lists</li>
+          <li>Item names written in Hinglish, spelled inconsistently</li>
+          <li>Day-first dates a model will misread as month-first</li>
+          <li>One page often spans the end of a month</li>
+          <li>Typing a week of entries by hand is why nobody does it</li>
+        </ul>
+      </div>
+      <div class="ps-card solution">
+        <h4>The Solution</h4>
+        <ul>
+          <li>Photograph the page; a vision model drafts the rows</li>
+          <li>The catalogue is handed to the model so names match</li>
+          <li>The date convention is stated explicitly in the prompt</li>
+          <li>Each line keeps its own date and lands in its own month</li>
+          <li>A review screen stands between the photo and the database</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">Key Highlights</h2>
+    <div class="highlights-grid">
+      <div class="highlight-card">
+        <div class="highlight-label">Catalogue Grounding</div>
+        <div class="highlight-text">The reader is handed the household's existing item catalogue, so it answers in the family's own Hinglish spellings and links lines back to existing items instead of starting parallel spending histories under new names</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Date Convention</div>
+        <div class="highlight-text">The prompt states the day-first Indian convention explicitly, so a slip reading 3.7.26 is parsed as the third of July rather than the seventh of March</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Per-Line Dates</div>
+        <div class="highlight-text">A photographed page is usually several days of spending, so each line keeps its own date and the sheet groups by day — a page spanning a month boundary lands correctly in both months rather than being flattened into one</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Verification Layer</div>
+        <div class="highlight-text">Uncertain readings are flagged for attention and the slip's handwritten total is reconciled against the parsed lines, turning a silent misread into a visible discrepancy</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Basket Entry</div>
+        <div class="highlight-text">Manual logging is basket-shaped — one date and payment method covering many lines — so typing a shop visit stays fast for anyone who would rather not use the camera at all</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Camera Deep Link</div>
+        <div class="highlight-text">Installed as a progressive web app with its own manifest, and a dedicated scan route can be saved as its own home-screen icon that opens straight to the camera</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">Technical Approach</h2>
+    <ul class="bullets">
+      <li>Supported two vision providers behind one interface, preferring Claude when its key is present because it reads the handwriting more accurately and does not train on inputs, with Gemini as the free fallback</li>
+      <li>Documented the privacy trade-off honestly in the setup instructions: the free Gemini tier may use submitted images to improve their products, and every scan is a photograph of household spending</li>
+      <li>Made the scan feature entirely optional — with no key configured it returns a clear error and the rest of the application is unaffected, because the manual entry sheet was built to be fast on its own</li>
+      <li>Treated model output as a draft rather than a result, writing nothing to the database until a human confirms it on a review screen</li>
+      <li>Gated the scan endpoint behind a hard server-side authentication check, since each call both reads back household spending and spends money at a paid API</li>
+      <li>Kept every derivation — category classification, summary math, percentage breakdowns, analytics — in pure server-side library modules with their own unit tests, rather than computing in components</li>
+      <li>Split the logic into focused, individually tested modules for expenses, items, categories, summaries, and analytics, so a change to reporting cannot quietly break entry</li>
+      <li>Gave the module its own web app manifest separate from the parent hub, so it installs as a standalone icon on a phone</li>
+      <li>Applied the same two-tier PIN model as the rest of the app: locked viewers see real monthly totals and category breakdowns but an empty line-item list</li>
+    </ul>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">What This Demonstrates</h2>
+    <ul class="bullets">
+      <li><strong>Practical AI Integration:</strong> Used a vision model where it genuinely removes drudgery, and designed the surrounding system on the assumption that it will sometimes be wrong</li>
+      <li><strong>Prompt Engineering as Design:</strong> Grounded the model in the household's own catalogue and stated the date convention explicitly, fixing two whole classes of error in the prompt rather than in post-processing</li>
+      <li><strong>Human-in-the-Loop by Default:</strong> Put a mandatory review step between model output and persisted data, with confidence flags and a total reconciliation to direct attention</li>
+      <li><strong>Honest Privacy Trade-offs:</strong> Wrote down what a free tier does with submitted images so the person enabling it can decide, instead of burying it</li>
+      <li><strong>Graceful Optionality:</strong> Built the AI path as an accelerator on top of a manual path that stands alone, so the feature degrades rather than breaks</li>
+      <li><strong>Domain Modelling:</strong> Recognised that a photographed page is a multi-day document, not a single receipt, and modelled it that way from the start</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>

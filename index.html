@@ -15,6 +15,7 @@
       <li><a href="#overview">Overview</a></li>
       <li><a href="#work-experience">Work experience</a></li>
       <li><a href="#freelance-projects">Freelance projects</a></li>
+      <li><a href="#personal-projects">Personal projects</a></li>
       <li><a href="#college-projects">College projects</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#education">Education</a></li>
@@ -194,6 +195,125 @@
         <li>Designed a multi-layer alerting system combining Grafana native alerts with custom Python notifications.</li>
         <li>Enabled live data ingestion and querying for time-series analysis.</li>
         <li>Delivered a lightweight, rapidly deployable system to validate feasibility and client needs.</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="section" id="personal-projects">
+    <div class="section-label">Personal projects</div>
+
+    <div class="job">
+      <div class="job-header">
+        <div>
+          <div class="job-title"><a href="./case-study/wedding-site.html">Wedding Photo Platform</a></div>
+          <div class="job-company">Face-Searchable Gallery · Solo Engineer</div>
+        </div>
+        <div class="job-meta">Jun – Aug 2026 · Next.js + Offline ML</div>
+      </div>
+      <div style="margin-bottom:6px;">
+        <span class="badge">Next.js 16</span>
+        <span class="badge">React 19</span>
+        <span class="badge">TypeScript</span>
+        <span class="badge">TensorFlow.js</span>
+        <span class="badge">Cloudflare R2</span>
+        <span class="badge">Playwright</span>
+      </div>
+      <ul class="bullets">
+        <li>Built a narrative wedding site and photo platform from a 196GB photographer delivery, designed end-to-end to run on a free object-storage tier.</li>
+        <li>Wrote a seven-stage offline pipeline that hashed 7,504 JPEGs, removed 2,468 near-duplicates, and compressed the 5,036 survivors to 1.31GB of AVIF.</li>
+        <li>Ran face detection and recognition locally, finding 17,731 faces and clustering them into 92 people so guests can browse every photo they appear in.</li>
+        <li>Kept all machine learning offline with locally bundled model weights — no API keys, no network calls, and no per-image cost at any volume.</li>
+        <li>Server-rendered every gallery page from manifests so images begin downloading from the HTML rather than after a client fetch.</li>
+        <li>Built a local-only curation tool, 404ing in production, for correcting clustering mistakes without shipping an admin surface or building auth.</li>
+        <li>Held the app runtime to two dependencies, keeping sharp, TensorFlow, and the storage client as build-time-only tooling.</li>
+        <li>Wrote 58 unit and integration test files plus browser end-to-end specs, every one network-safe so the suite can never generate a bill.</li>
+        <li>Rewrote git history to remove bulk media, shrinking the repository from 2.1GB to 2.8MB while preserving 94 of 98 commits.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <div>
+          <div class="job-title"><a href="./case-study/tenant-manager.html">Tenant Manager</a></div>
+          <div class="job-company">Rent Tracking &amp; WhatsApp Reminders · Solo Engineer</div>
+        </div>
+        <div class="job-meta">May – Sep 2026 · Next.js + Supabase</div>
+      </div>
+      <div style="margin-bottom:6px;">
+        <span class="badge badge-blue">Next.js 16</span>
+        <span class="badge badge-blue">TypeScript</span>
+        <span class="badge badge-blue">Supabase</span>
+        <span class="badge badge-blue">PostgreSQL</span>
+        <span class="badge badge-blue">WhatsApp</span>
+        <span class="badge badge-blue">Vitest</span>
+      </div>
+      <ul class="bullets">
+        <li>Built a private property-management app replacing spreadsheets for tenant records, rent calculation, payment status, and payment history.</li>
+        <li>Modelled scheduled rent increases so raises apply on their own dates instead of being remembered and re-entered each month.</li>
+        <li>Designed a two-tier shared-PIN access model enforced server-side, chosen deliberately over real auth for a handful of non-technical family users.</li>
+        <li>Implemented HMAC-signed thirty-day session tokens on Node's own crypto module, so rotating the admin PIN revokes every live session at once.</li>
+        <li>Made locked access degrade rather than fail — sensitive fields are omitted and totals stay accurate, instead of the page refusing to load.</li>
+        <li>Enforced an architecture rule keeping all business logic server-side, backed by a refactor relocating roughly ten pieces of logic out of components.</li>
+        <li>Isolated WhatsApp broadcasts in a separate worker process so a browser-automation failure cannot take down the web app.</li>
+        <li>Migrated the data layer from Google Sheets to Supabase, then removed the migration-era compatibility shims once they stopped earning their keep.</li>
+        <li>Covered the rent math, access tiers, and API routes with 37 test files.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <div>
+          <div class="job-title"><a href="./case-study/expense-module.html">Household Expense Module</a></div>
+          <div class="job-company">Handwritten Slip Scanning · Solo Engineer</div>
+        </div>
+        <div class="job-meta">May – Sep 2026 · Next.js + Vision LLM</div>
+      </div>
+      <div style="margin-bottom:6px;">
+        <span class="badge badge-amber">Next.js 16</span>
+        <span class="badge badge-amber">Claude API</span>
+        <span class="badge badge-amber">Gemini API</span>
+        <span class="badge badge-amber">Supabase</span>
+        <span class="badge badge-amber">Zod</span>
+        <span class="badge badge-amber">PWA</span>
+      </div>
+      <ul class="bullets">
+        <li>Built household expense tracking with a catalogue of items and categories, monthly summaries, category breakdowns, and spending analytics.</li>
+        <li>Implemented slip scanning that reads a photographed handwritten page into draft rows through a vision model, replacing manual retyping.</li>
+        <li>Grounded the model in the household's own item catalogue so it returns familiar Hinglish spellings and links lines to existing items.</li>
+        <li>Handled the day-first Indian date convention explicitly in the prompt, eliminating a whole class of month-day transposition errors.</li>
+        <li>Modelled a photographed page as a multi-day document, so lines keep their own dates and a page spanning a month boundary lands in both months.</li>
+        <li>Built a mandatory review screen between model output and the database, with uncertainty flags and the slip's own total reconciled against parsed lines.</li>
+        <li>Supported two vision providers behind one interface, preferring the more accurate paid reader when configured and falling back to a free tier.</li>
+        <li>Documented the free tier's data-use terms in the setup guide and kept the feature fully optional, with manual entry designed to stand alone.</li>
+        <li>Kept classification, summary math, and analytics in pure server-side modules with their own unit tests rather than computing in components.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <div>
+          <div class="job-title"><a href="./case-study/ship-shooter.html">Ship Shooter</a></div>
+          <div class="job-company">iOS &amp; macOS Game · Solo Developer</div>
+        </div>
+        <div class="job-meta">2026 · Swift + SpriteKit</div>
+      </div>
+      <div style="margin-bottom:6px;">
+        <span class="badge">Swift</span>
+        <span class="badge">SpriteKit</span>
+        <span class="badge">iOS</span>
+        <span class="badge">macOS</span>
+        <span class="badge">Game Design</span>
+      </div>
+      <ul class="bullets">
+        <li>Built a casual pick-up-and-play game about the sea in SpriteKit, with iOS and macOS targets sharing a single game core.</li>
+        <li>Implemented a pseudo-3D perspective sea sailed toward a horizon, getting depth and distance from a 2D framework without a 3D engine.</li>
+        <li>Designed the whole mechanical vocabulary around one input — steering — including whirlpools that pull the ship and are fought by steering out.</li>
+        <li>Tied difficulty to distance with waves that damage, slow, and stiffen the further out the player sails.</li>
+        <li>Added a reveal on the horizon after sustained progress, motivating continued play through curiosity rather than a score counter.</li>
+        <li>Instituted a written four-gate design filter every feature must pass before being built, with failing ideas parked in their own document.</li>
+        <li>Kept nine living design documents and an append-only decision log recording the reasoning behind each choice, treating code-doc disagreement as a bug.</li>
+        <li>Sequenced milestones feel-first and left shooting out of the core loop, despite the project's name, because it failed the design filter.</li>
       </ul>
     </div>
   </div>

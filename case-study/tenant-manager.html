@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tenant Manager - Case Study</title>
+  <link rel="stylesheet" href="case-study.css">
+</head>
+
+<body>
+<div class="case-study">
+  <a href="../index.html" class="back-button">← Back to Home</a>
+  <div class="case-study-header">
+    <div class="case-study-subtitle">Tenant Manager</div>
+    <h1 class="case-study-title">Rent Tracking and WhatsApp Reminders for a Family Property</h1>
+    <div class="case-study-meta">Solo Engineer · Next.js + Supabase · May – Sep 2026</div>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">Overview</h2>
+    <div class="overview-box">
+      <p>
+        A private application replacing the spreadsheets and memory used to run a family rental property. It tracks tenants, computes monthly rent including scheduled increases, records payment status and history, and sends rent reminders over WhatsApp.
+      </p>
+      <p>
+        The users are relatives, including a non-technical grandmother. That shaped nearly every decision: <strong>no accounts, no signup, no password reset flow</strong>. Sensitive data and write actions sit behind two shared numeric PINs enforced on the server, which is enough security for the actual threat model without putting a login wall in front of someone who just wants to check whether the rent came in.
+      </p>
+      <p>
+        It shares a codebase with the <a href="./expense-module.html" style="color:#1D9E75;font-weight:500;">household expense module</a>, both reached through a common hub.
+      </p>
+    </div>
+
+    <div class="tech-stack">
+      <span class="tech-badge">Next.js 16</span>
+      <span class="tech-badge">React 19</span>
+      <span class="tech-badge">TypeScript</span>
+      <span class="tech-badge">Supabase</span>
+      <span class="tech-badge">PostgreSQL</span>
+      <span class="tech-badge">Tailwind 4</span>
+      <span class="tech-badge">WhatsApp</span>
+      <span class="tech-badge">Vitest</span>
+    </div>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">Problem &amp; Solution</h2>
+    <div class="problem-solution-grid">
+      <div class="ps-card problem">
+        <h4>The Problem</h4>
+        <ul>
+          <li>Rent tracked across spreadsheets and phone conversations</li>
+          <li>Scheduled rent increases applied manually and forgotten</li>
+          <li>Reminders sent one tenant at a time, by hand</li>
+          <li>Non-technical users who will abandon any login flow</li>
+          <li>Sensitive tenant data with no access control at all</li>
+        </ul>
+      </div>
+      <div class="ps-card solution">
+        <h4>The Solution</h4>
+        <ul>
+          <li>One dashboard showing paid, late, and pending at a glance</li>
+          <li>Rent computed from the schedule, not re-entered each month</li>
+          <li>One-tap WhatsApp broadcast to every tenant</li>
+          <li>No accounts — two shared PINs, server-enforced</li>
+          <li>Locked viewers get a degraded response, not an error page</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">Key Highlights</h2>
+    <div class="highlights-grid">
+      <div class="highlight-card">
+        <div class="highlight-label">Rent Computation</div>
+        <div class="highlight-text">Monthly rent derived from each tenant's terms and their scheduled increase dates, so raises take effect on their own without anyone remembering to apply them</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Two-Tier PIN Auth</div>
+        <div class="highlight-text">A family PIN for viewing sensitive fields and an admin PIN for write actions, hierarchical so admin satisfies everything family can do</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Signed Sessions</div>
+        <div class="highlight-text">HMAC-signed thirty-day tokens built on Node's own crypto module, adding no dependency; rotating the admin PIN invalidates every outstanding session of both tiers at once</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Graceful Degradation</div>
+        <div class="highlight-text">Without a PIN the dashboard simply omits phone numbers, deposits, and bank details rather than refusing to load, and reports which version the client received</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">WhatsApp Worker</div>
+        <div class="highlight-text">Reminder broadcasts and monthly greetings run through a separate local service authenticated by scanning a QR code once, keeping a browser automation dependency out of the web app</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Migrated Off Sheets</div>
+        <div class="highlight-text">Moved from a Google Sheets backend to Supabase, then deliberately removed the migration-era compatibility shims once they were no longer earning their keep</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">Technical Approach</h2>
+    <ul class="bullets">
+      <li>Enforced a strict architectural rule that all business logic lives in the server library or API routes, with components reduced to fetch-and-render — and backed it with a refactor that relocated roughly ten pieces of stray logic out of components</li>
+      <li>Designed the PIN check to verify the admin secret before the family one, so a misconfigured overlap grants the higher tier rather than silently downgrading a user</li>
+      <li>Signed session tokens with the admin PIN regardless of which tier unlocked them, making PIN rotation a single-step revocation of every live session</li>
+      <li>Parsed the cookie header directly instead of using the framework's request-context helper, so route handlers can be unit tested by calling them with a plain request object outside any server context</li>
+      <li>Made unlock prompts check the live session before opening, so a page with several gated buttons prompts once per session rather than once per click</li>
+      <li>Returned an explicit wrong-tier error when a valid family PIN is submitted against an admin-only action, instead of accepting it and failing further down</li>
+      <li>Kept the locked-state expense totals accurate across the full month even while the line items themselves are withheld, so an unauthenticated viewer sees real numbers without the private detail</li>
+      <li>Isolated the WhatsApp integration in its own process on a separate port, so a browser-automation crash cannot take down the web application</li>
+      <li>Built 37 test files covering the rent math, access tiers, API routes, and derivation logic that would otherwise be invisible until a month-end mistake</li>
+    </ul>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">What This Demonstrates</h2>
+    <ul class="bullets">
+      <li><strong>Right-Sized Security:</strong> Chose two shared PINs over real authentication after reasoning about the actual users and threat model, then enforced that choice properly on the server rather than hiding buttons on the client</li>
+      <li><strong>Architectural Discipline:</strong> Set a clear logic-placement rule and enforced it with a real refactor, keeping the codebase testable as it grew</li>
+      <li><strong>Designing for Real Users:</strong> Optimised for a grandmother checking rent on a phone, which ruled out patterns that would be automatic in a commercial product</li>
+      <li><strong>Testability as a Constraint:</strong> Made deliberate implementation choices, like hand-parsing cookies, specifically so route handlers could be tested without a framework harness</li>
+      <li><strong>Migration Hygiene:</strong> Moved backends and then went back to delete the compatibility layers, rather than leaving them to rot as permanent complexity</li>
+      <li><strong>Failure Isolation:</strong> Separated a fragile third-party integration into its own process so its failure mode is a clear error on two buttons, not an outage</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>

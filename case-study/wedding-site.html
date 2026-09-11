@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding Photo Platform - Case Study</title>
+  <link rel="stylesheet" href="case-study.css">
+</head>
+
+<body>
+<div class="case-study">
+  <a href="../index.html" class="back-button">← Back to Home</a>
+  <div class="case-study-header">
+    <div class="case-study-subtitle">Wedding Photo Platform</div>
+    <h1 class="case-study-title">A Face-Searchable Gallery for 7,500 Photographs</h1>
+    <div class="case-study-meta">Solo Engineer · Next.js + Offline ML Pipeline · Jun – Aug 2026</div>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">Overview</h2>
+    <div class="overview-box">
+      <p>
+        A photographer delivered roughly 7,500 raw JPEGs across 196GB. The job was to turn that into something guests would actually enjoy — a narrative site telling the day in chapters, eight immersive per-event reels, per-event albums, a full gallery of every surviving photograph, and a "People" view where anyone can find every picture they appear in.
+      </p>
+      <p>
+        The interesting constraint was cost. This runs on a <strong>Cloudflare R2 free tier</strong> with no budget behind it, so deduplication, compression, face recognition, and clustering all happen <strong>offline on a laptop</strong> before anything ships. No per-image API calls, no inference at request time, no recurring bill.
+      </p>
+    </div>
+
+    <div class="tech-stack">
+      <span class="tech-badge">Next.js 16</span>
+      <span class="tech-badge">React 19</span>
+      <span class="tech-badge">TypeScript</span>
+      <span class="tech-badge">TensorFlow.js</span>
+      <span class="tech-badge">face-api</span>
+      <span class="tech-badge">sharp</span>
+      <span class="tech-badge">Cloudflare R2</span>
+      <span class="tech-badge">Vitest</span>
+      <span class="tech-badge">Playwright</span>
+    </div>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">Problem &amp; Solution</h2>
+    <div class="problem-solution-grid">
+      <div class="ps-card problem">
+        <h4>The Problem</h4>
+        <ul>
+          <li>196GB of raw delivery, far too large to host or browse</li>
+          <li>Roughly a third of the photos were near-duplicate burst frames</li>
+          <li>No way for a guest to find the photos they are actually in</li>
+          <li>Hosted ML face APIs bill per image — unaffordable at this volume</li>
+          <li>Bulk media in git would make the repo unusable</li>
+        </ul>
+      </div>
+      <div class="ps-card solution">
+        <h4>The Solution</h4>
+        <ul>
+          <li>Offline pipeline: hash, dedupe, resize, detect, cluster, upload</li>
+          <li>Perceptual hashing with sharpness scoring keeps the best frame</li>
+          <li>Face clustering groups every photo by the people in it</li>
+          <li>Local models with no API keys and no per-image cost</li>
+          <li>Media lives in object storage; only manifests are committed</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">The Pipeline</h2>
+    <div class="highlights-grid">
+      <div class="highlight-card">
+        <div class="highlight-label">Stage 1–2 · Dedupe</div>
+        <div class="highlight-text">7,504 source JPEGs perceptually hashed and scored for sharpness, then reduced to 5,036 survivors by removing 2,468 near-duplicates — the sharpest frame in each burst wins</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Stage 3 · Resize</div>
+        <div class="highlight-text">Survivors re-encoded to AVIF display and thumbnail sizes plus a face-detection input, compressing 196GB of source down to 1.31GB</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Stage 4–5 · Faces</div>
+        <div class="highlight-text">17,731 faces detected across the gallery and clustered by recognition embedding into 92 distinct people, each appearing in 4 to 150 photographs</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Stage 6 · Publish</div>
+        <div class="highlight-text">10,164 files uploaded to Cloudflare R2 alongside two manifests that the site server-renders from, so photos download from the HTML rather than after a client fetch</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Stage 7 · Curation</div>
+        <div class="highlight-text">A local-only admin tool for correcting clustering mistakes and assigning photos to event sections, writing an overrides file the upload stage prefers over raw output</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Total Cost</div>
+        <div class="highlight-text">Roughly 2.5 hours of wall time on a laptop, almost all of it in resize and hash — the machine-learning stages take under six minutes combined, and nothing bills per image</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">Technical Approach</h2>
+    <ul class="bullets">
+      <li>Built a seven-stage offline pipeline in Node that is idempotent and cached at each step, so a retune of clustering thresholds does not force a re-hash or re-encode of thousands of photographs</li>
+      <li>Ran face detection and recognition entirely locally with TensorFlow.js and face-api, whose model weights ship inside the npm package — no separate download, no network, no API keys, and no per-image billing</li>
+      <li>Chose perceptual hashing over pixel comparison for deduplication, with a sharpness score breaking ties so the surviving frame from each burst is the one actually worth keeping</li>
+      <li>Kept the app's runtime dependency list to Next.js and React alone — every heavy library (sharp, TensorFlow, canvas, the S3 client) is a development dependency used only by offline scripts</li>
+      <li>Server-rendered every gallery page from manifest files read on the server, so image downloads begin as the HTML parses instead of after a client-side fetch resolves</li>
+      <li>Wrote a local-only curation tool that returns a 404 in production, letting clustering errors be fixed by hand without shipping an admin surface or building an auth system for it</li>
+      <li>Put all guest-facing prose, chapter order, times of day, and pull-quotes in a single content module, so reordering the day reorders the story, the album list, and the reel switcher together</li>
+      <li>Rewrote the git history to drop bulk media, shrinking the repository from 2.1GB to 2.8MB while preserving 94 of 98 commits</li>
+      <li>Set free-tier alert thresholds at 75% of each R2 limit, identifying read operations as the only metric that actually scales with guest traffic</li>
+    </ul>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">Testing &amp; Quality</h2>
+    <div class="role-section">
+      <h4>Two Layers, Both Network-Safe</h4>
+      <ul>
+        <li>58 Vitest files covering units, hooks, components, API routes, and full page integration — fast, no browser, no network</li>
+        <li>Playwright specs for the things jsdom cannot observe: the production admin gate, and real lazy-loading and windowing behaviour</li>
+        <li>Every test is network-safe by construction, because a suite that hit real object storage on each run would burn the free tier it exists to protect</li>
+        <li>Pipeline tests operate on scratch temp directories, never the real cache or the curated overrides file</li>
+        <li>The upload script's dry-run test runs the real command-line tool as a subprocess, proving the actual guard works rather than a mock of it</li>
+        <li>The suite was built ahead of a visual refactor so behaviour had a regression net, and it caught real bugs during that work</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">What This Demonstrates</h2>
+    <ul class="bullets">
+      <li><strong>Cost-Aware Architecture:</strong> Designed the whole system around a free tier — moving every expensive operation offline and one-time rather than online and recurring</li>
+      <li><strong>Practical Machine Learning:</strong> Applied face detection and clustering to a real dataset, tuned the thresholds against actual results, and shipped a human correction path for where the model gets it wrong</li>
+      <li><strong>Data Engineering at Scale:</strong> Reduced 196GB to 1.31GB through a staged, resumable pipeline with a documented reference run others can check their own numbers against</li>
+      <li><strong>Performance Discipline:</strong> Server-rendered from manifests and kept the runtime dependency tree to two packages, so the page is fast on a phone at a wedding venue</li>
+      <li><strong>Testing Under Constraint:</strong> Built a test suite that provides real coverage while guaranteeing it can never generate a bill</li>
+      <li><strong>Documentation as Deliverable:</strong> Wrote the pipeline docs so the same approach can be pointed at a different event, including what to retune and why the old numbers will not transfer</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>
