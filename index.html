@@ -27,10 +27,12 @@
       <div class="name">Yash Shrivastava</div>
     <div class="tagline">Founding Engineer · Backend & Real-Time Systems · 5 Years</div>
       <div class="contact-row">
-        <div class="contact-item"><span>✉</span> ctrl.alt.yash@gmail.com</div>
+        <div class="contact-item"><a href="https://www.maxsash.com" target="_blank" rel="noopener noreferrer"><span>◆</span> Founder, Maxsash Studio</a></div>
+        <div class="contact-item"><span>⌖</span> Tikamgarh, India · Remote</div>
+        <div class="contact-item"><a href="mailto:yash@maxsash.com"><span>✉</span> yash@maxsash.com</a></div>
         <div class="contact-item"><span>☎</span> +91 7000136567</div>
         <div class="contact-item"><a href="https://www.linkedin.com/in/maxsash" target="_blank" rel="noopener noreferrer"><span>in</span> LinkedIn</a></div>
-        <div class="contact-item"><a href="https://www.github.com/maxsash" target="_blank" rel="noopener noreferrer"><span>gh</span> GitHub</a></div>
+        <div class="contact-item"><a href="https://github.com/ctrl-alt-yash" target="_blank" rel="noopener noreferrer"><span>gh</span> GitHub</a></div>
       </div>
     </div>
 
@@ -47,7 +49,7 @@
           <div class="job-title">Full-stack Developer</div>
           <div class="job-company">NimbleWork (Digité) · Product SaaS</div>
         </div>
-        <div class="job-meta">Apr 2023 – Present · Mumbai, India</div>
+        <div class="job-meta">Apr 2023 – May 2026 · Mumbai, India</div>
       </div>
       <ul class="bullets">
         <li>Developed a dashboard with user analytics giving insights into product usage and retention.</li>
@@ -83,6 +85,35 @@
 
   <div class="section" id="freelance-projects">
     <div class="section-label">Freelance projects</div>
+
+    <div class="job">
+      <div class="job-header">
+        <div>
+          <div class="job-title"><a href="./case-study/velora-rights.html">Velora Rights</a></div>
+          <div class="job-company">IP Law Practice Website · Solo Developer</div>
+          <div class="project-link"><a href="https://velorarights.com" target="_blank" rel="noopener noreferrer">velorarights.com ↗</a></div>
+        </div>
+        <div class="job-meta">Jun – Aug 2026 · Client project · India</div>
+      </div>
+      <div style="margin-bottom:6px;">
+        <span class="badge">Next.js 16</span>
+        <span class="badge">TypeScript</span>
+        <span class="badge">MDX</span>
+        <span class="badge">Tailwind 4</span>
+        <span class="badge">JSON-LD</span>
+        <span class="badge">Playwright</span>
+      </div>
+      <ul class="bullets">
+        <li>Built the website for an Indian intellectual property law practice, prioritising discoverability by search engines and AI assistants, as the owner asked.</li>
+        <li>Drove internship applications and client enquiries through organic search alone, with no paid promotion.</li>
+        <li>Statically generated every page with full article text in the HTML, and added a CI check that fails if any route turns dynamic.</li>
+        <li>Added JSON-LD for the practice, the founder, articles, breadcrumbs, and FAQs, plus an llms.txt index, an RSS feed, and per-page share images.</li>
+        <li>Set up Google Search Console and Bing Webmaster Tools, submitted sitemaps, and requested indexing for key pages at launch.</li>
+        <li>Made content owner-editable as Markdown files with a template and a plain-language guide, validated at build time so a mistake fails the deploy.</li>
+        <li>Kept all copy informational to comply with Bar Council of India advertising rules, with a disclaimer shown on first visit.</li>
+        <li>Covered loaders, components, structured data, and generated routes with 17 Vitest files and 7 Playwright specs.</li>
+      </ul>
+    </div>
 
     <div class="job">
       <div class="job-header">
@@ -208,8 +239,9 @@
         <div>
           <div class="job-title"><a href="./case-study/wedding-site.html">Wedding Photo Platform</a></div>
           <div class="job-company">Face-Searchable Gallery · Solo Engineer</div>
+          <div class="project-link"><a href="https://wedding-demo-teal.vercel.app/" target="_blank" rel="noopener noreferrer">Public demo ↗</a></div>
         </div>
-        <div class="job-meta">Jun – Aug 2026 · Next.js + Offline ML</div>
+        <div class="job-meta">Jun – Sep 2026 · Next.js + Offline ML</div>
       </div>
       <div style="margin-bottom:6px;">
         <span class="badge">Next.js 16</span>
@@ -229,6 +261,7 @@
         <li>Held the app runtime to two dependencies, keeping sharp, TensorFlow, and the storage client as build-time-only tooling.</li>
         <li>Wrote 58 unit and integration test files plus browser end-to-end specs, every one network-safe so the suite can never generate a bill.</li>
         <li>Rewrote git history to remove bulk media, shrinking the repository from 2.1GB to 2.8MB while preserving 94 of 98 commits.</li>
+        <li>Shipped a public demo from the same codebase — 1,004 photographs with every face frosted — checked by three independent face and text detectors and a build that fails if anything identifying the real wedding survives.</li>
       </ul>
     </div>
 
@@ -237,8 +270,9 @@
         <div>
           <div class="job-title"><a href="./case-study/tenant-manager.html">Tenant Manager</a></div>
           <div class="job-company">Rent Tracking &amp; WhatsApp Reminders · Solo Engineer</div>
+          <div class="project-link"><a href="https://tenant-management-2my6.vercel.app/" target="_blank" rel="noopener noreferrer">Public demo ↗</a></div>
         </div>
-        <div class="job-meta">May – Sep 2026 · Next.js + Supabase</div>
+        <div class="job-meta">May – Oct 2026 · Next.js + Supabase</div>
       </div>
       <div style="margin-bottom:6px;">
         <span class="badge badge-blue">Next.js 16</span>
@@ -255,9 +289,10 @@
         <li>Implemented HMAC-signed thirty-day session tokens on Node's own crypto module, so rotating the admin PIN revokes every live session at once.</li>
         <li>Made locked access degrade rather than fail — sensitive fields are omitted and totals stay accurate, instead of the page refusing to load.</li>
         <li>Enforced an architecture rule keeping all business logic server-side, backed by a refactor relocating roughly ten pieces of logic out of components.</li>
-        <li>Isolated WhatsApp broadcasts in a separate worker process so a browser-automation failure cannot take down the web app.</li>
+        <li>Isolated WhatsApp broadcasts in a separate worker process so a browser-automation failure cannot take down the web app, and added a phone-friendly tap-to-send path that needs no worker.</li>
         <li>Migrated the data layer from Google Sheets to Supabase, then removed the migration-era compatibility shims once they stopped earning their keep.</li>
-        <li>Covered the rent math, access tiers, and API routes with 37 test files.</li>
+        <li>Shipped a public demo on the same code: six invented tenants and two years of history generated relative to today and rebuilt nightly, behind three guards so the reset can never reach family data.</li>
+        <li>Covered the rent math, access tiers, insights, and API routes with 61 test files.</li>
       </ul>
     </div>
 
@@ -266,8 +301,9 @@
         <div>
           <div class="job-title"><a href="./case-study/expense-module.html">Household Expense Module</a></div>
           <div class="job-company">Handwritten Slip Scanning · Solo Engineer</div>
+          <div class="project-link"><a href="https://tenant-management-2my6.vercel.app/expense" target="_blank" rel="noopener noreferrer">Public demo ↗</a></div>
         </div>
-        <div class="job-meta">May – Sep 2026 · Next.js + Vision LLM</div>
+        <div class="job-meta">May – Oct 2026 · Next.js + Vision LLM</div>
       </div>
       <div style="margin-bottom:6px;">
         <span class="badge badge-amber">Next.js 16</span>
@@ -282,10 +318,11 @@
         <li>Implemented slip scanning that reads a photographed handwritten page into draft rows through a vision model, replacing manual retyping.</li>
         <li>Grounded the model in the household's own item catalogue so it returns familiar Hinglish spellings and links lines to existing items.</li>
         <li>Handled the day-first Indian date convention explicitly in the prompt, eliminating a whole class of month-day transposition errors.</li>
-        <li>Modelled a photographed page as a multi-day document, so lines keep their own dates and a page spanning a month boundary lands in both months.</li>
+        <li>Modelled a photographed page as a multi-day document read from up to four photos, so lines keep their own dates and a page spanning a month boundary lands in both months.</li>
         <li>Built a mandatory review screen between model output and the database, with uncertainty flags and the slip's own total reconciled against parsed lines.</li>
         <li>Supported two vision providers behind one interface, preferring the more accurate paid reader when configured and falling back to a free tier.</li>
         <li>Documented the free tier's data-use terms in the setup guide and kept the feature fully optional, with manual entry designed to stand alone.</li>
+        <li>Built insights that notice gaps — a missed bill, an item due for re-purchase — and put the action that resolves each one on the same row, opening a pre-filled entry rather than saving blind.</li>
         <li>Kept classification, summary math, and analytics in pure server-side modules with their own unit tests rather than computing in components.</li>
       </ul>
     </div>
@@ -314,6 +351,31 @@
         <li>Instituted a written four-gate design filter every feature must pass before being built, with failing ideas parked in their own document.</li>
         <li>Kept nine living design documents and an append-only decision log recording the reasoning behind each choice, treating code-doc disagreement as a bug.</li>
         <li>Sequenced milestones feel-first and left shooting out of the core loop, despite the project's name, because it failed the design filter.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <div>
+          <div class="job-title"><a href="./case-study/family-tree.html">Family Tree</a></div>
+          <div class="job-company">iOS Family Tree App · Solo Developer · In progress</div>
+        </div>
+        <div class="job-meta">Sep 2026 – Present · SwiftUI</div>
+      </div>
+      <div style="margin-bottom:6px;">
+        <span class="badge badge-blue">Swift</span>
+        <span class="badge badge-blue">SwiftUI</span>
+        <span class="badge badge-blue">Swift Package</span>
+        <span class="badge badge-blue">Swift Testing</span>
+        <span class="badge badge-blue">iOS</span>
+      </div>
+      <ul class="bullets">
+        <li>Building a graph-first family tree app where relatives are added from the tree itself, with placeholder slots for missing parents, partners, and children.</li>
+        <li>Rebuilt the layout as a pure-Swift engine in its own package that never imports SwiftUI, shrinking the root view from 1,640 lines to 93.</li>
+        <li>Stored only parent-child and partner relationships and derived siblings, labels, and family groups, removing a whole class of inconsistent data.</li>
+        <li>Fixed relatives landing beside strangers by deciding each row's order before any coordinates exist, keeping partners and co-parents together.</li>
+        <li>Covered family rules and golden layouts with 80 package tests that run in about a second, without a simulator.</li>
+        <li>Working from twelve design documents, a decision log, and an ordered plan; next up are saved data, editing with undo, and accessibility.</li>
       </ul>
     </div>
   </div>

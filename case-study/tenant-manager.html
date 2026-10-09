@@ -13,7 +13,8 @@
   <div class="case-study-header">
     <div class="case-study-subtitle">Tenant Manager</div>
     <h1 class="case-study-title">Rent Tracking and WhatsApp Reminders for a Family Property</h1>
-    <div class="case-study-meta">Solo Engineer · Next.js + Supabase · May – Sep 2026</div>
+    <div class="case-study-meta">Solo Engineer · Next.js + Supabase · May – Oct 2026</div>
+    <a href="https://tenant-management-2my6.vercel.app/" class="demo-link" target="_blank" rel="noopener noreferrer">Try the public demo ↗</a>
   </div>
 
   <div class="case-study-section">
@@ -24,6 +25,9 @@
       </p>
       <p>
         The users are relatives, including a non-technical grandmother. That shaped nearly every decision: <strong>no accounts, no signup, no password reset flow</strong>. Sensitive data and write actions sit behind two shared numeric PINs enforced on the server, which is enough security for the actual threat model without putting a login wall in front of someone who just wants to check whether the rent came in.
+      </p>
+      <p>
+        The <strong>public demo</strong> runs the same code on an invented household: six tenants named after the space they rent, two years of rent history, and both PINs printed at the top of every page so visitors can try every tier. A guide on each screen points out what to look at, such as the tenant who never paid a month from three months back.
       </p>
       <p>
         It shares a codebase with the <a href="./expense-module.html" style="color:#1D9E75;font-weight:500;">household expense module</a>, both reached through a common hub.
@@ -95,6 +99,14 @@
         <div class="highlight-label">Migrated Off Sheets</div>
         <div class="highlight-text">Moved from a Google Sheets backend to Supabase, then deliberately removed the migration-era compatibility shims once they were no longer earning their keep</div>
       </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Tap-to-Send WhatsApp</div>
+        <div class="highlight-text">A phone-friendly path for when the laptop worker is off: pick a reminder or greeting, tap each tenant, and WhatsApp opens with the message already typed, marking who has been sent so far</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Public Demo</div>
+        <div class="highlight-text">The same code runs a public demo on an invented household generated relative to today, rebuilt every night so it never goes stale and visitors' changes are wiped</div>
+      </div>
     </div>
   </div>
 
@@ -109,7 +121,9 @@
       <li>Returned an explicit wrong-tier error when a valid family PIN is submitted against an admin-only action, instead of accepting it and failing further down</li>
       <li>Kept the locked-state expense totals accurate across the full month even while the line items themselves are withheld, so an unauthenticated viewer sees real numbers without the private detail</li>
       <li>Isolated the WhatsApp integration in its own process on a separate port, so a browser-automation crash cannot take down the web application</li>
-      <li>Built 37 test files covering the rent math, access tiers, API routes, and derivation logic that would otherwise be invisible until a month-end mistake</li>
+      <li>Generated the demo household from calendar rules with randomness seeded by date and rule, so each night's rebuild produces the same household with one more day of history rather than a reshuffled one</li>
+      <li>Guarded the nightly demo reset three ways — a demo-mode flag, the cron secret, and a marker table that exists only in the demo database — because the route deletes everything and ships in the same build as the family app</li>
+      <li>Built 61 test files covering the rent math, access tiers, insights, API routes, and derivation logic that would otherwise be invisible until a month-end mistake</li>
     </ul>
   </div>
 

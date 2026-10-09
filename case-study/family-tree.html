@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Family Tree - Case Study</title>
+  <link rel="stylesheet" href="case-study.css">
+</head>
+
+<body>
+<div class="case-study">
+  <a href="../index.html" class="back-button">← Back to Home</a>
+  <div class="case-study-header">
+    <div class="case-study-subtitle">Family Tree · In progress</div>
+    <h1 class="case-study-title">A Family Tree App With a Layout Engine You Can Test</h1>
+    <div class="case-study-meta">Solo Developer · SwiftUI + Swift Package · iOS · Sep 2026 – Present</div>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">Overview</h2>
+    <div class="overview-box">
+      <p>
+        An iOS app for mapping your family without feeling like you are operating database software. The tree is the main screen: you add relatives from the person you are looking at, and empty "ghost" slots show where a missing parent, partner, or child would go.
+      </p>
+      <p>
+        Real families are hard to draw. Remarriages, step-parents, adoptions, and partners who married in all have to land somewhere sensible, and an early version put a newly added father 482 points from his own son. So the project was rebuilt around a <strong>pure-Swift layout engine</strong> in its own package, tested without a simulator, with SwiftUI only drawing what the engine decides.
+      </p>
+      <p>
+        <strong>Status:</strong> the foundation and the structural rebuild are done. Now in progress: interaction refinements found on a phone, then the first release — your own tree instead of the built-in sample family, saved data, editing and undo, and accessibility.
+      </p>
+    </div>
+
+    <div class="tech-stack">
+      <span class="tech-badge">Swift</span>
+      <span class="tech-badge">SwiftUI</span>
+      <span class="tech-badge">Swift Package</span>
+      <span class="tech-badge">Swift Testing</span>
+      <span class="tech-badge">iOS 26</span>
+      <span class="tech-badge">Xcode</span>
+    </div>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">Problem &amp; Solution</h2>
+    <div class="problem-solution-grid">
+      <div class="ps-card problem">
+        <h4>The Problem</h4>
+        <ul>
+          <li>Family tree apps feel like filling in database forms</li>
+          <li>Remarriages and step-families break simple tree layouts</li>
+          <li>Layout bugs only showed up by eye, in the simulator</li>
+          <li>One 1,640-line view file mixed drawing with family logic</li>
+          <li>Stored relationships drifted out of step with each other</li>
+        </ul>
+      </div>
+      <div class="ps-card solution">
+        <h4>The Solution</h4>
+        <ul>
+          <li>Add relatives from the tree itself, in human terms</li>
+          <li>A layout engine with explicit rules for partners and families</li>
+          <li>Golden layout tests that run in about a second</li>
+          <li>Family logic in a package that never imports SwiftUI</li>
+          <li>Store two relationships; derive everything else</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">Key Highlights</h2>
+    <div class="highlights-grid">
+      <div class="highlight-card">
+        <div class="highlight-label">One Architectural Rule</div>
+        <div class="highlight-text">Family logic never imports SwiftUI, and UI code never does family math; the root view went from 1,640 lines and twelve types to 93 lines</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Two Stored Relationships</div>
+        <div class="highlight-text">Only parent-child and partner are stored. Siblings, labels like "cousin", and family groupings are all derived by walking those two</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Order, Then Coordinates</div>
+        <div class="highlight-text">The engine decides each row's order before any position exists and never reorders afterwards, which fixed relatives landing next to strangers</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Ghost Slots</div>
+        <div class="highlight-text">Placeholders for missing relatives are placed by the layout pass in space the row reserved, not by searching for a gap, which once put one 1,914 points from its owner</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Fast Tests</div>
+        <div class="highlight-text">80 package tests for family rules and layout, including golden layouts of fixture families, run in about a second; 5 app tests cover the store and viewport</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Written Plan</div>
+        <div class="highlight-text">Twelve design documents, a decision log, and an ordered work plan with acceptance criteria for every task</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">Technical Approach</h2>
+    <ul class="bullets">
+      <li>Moved the family model, rules, and layout into a separate Swift package, so the logic can be tested in about a second without building the app or starting a simulator</li>
+      <li>Removed the stored sibling relationship entirely, because a pairwise link cannot carry a transitive fact; a sibling is now a statement about a shared parent</li>
+      <li>Made slot rules shape what the app offers, never what it permits, so a step-parent can be added as a third parent</li>
+      <li>Kept partners side by side and a child's co-parents together, with no one placed between them, even when no partnership is recorded</li>
+      <li>Routed connector lines in the engine, so every line joins up and no two family bars share a height and a stretch of canvas</li>
+      <li>Computed layout once per change and handed views a prepared value, after finding the canvas recomputed per node on every scroll frame</li>
+      <li>Distinguished relationships by line shape, not colour alone, so the meaning never depends on colour</li>
+      <li>Checked for cycles across all ancestors, not just direct two-person loops</li>
+      <li>Wrote every rule above into the project guide as a verified defect, so it cannot quietly come back</li>
+    </ul>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">What's Next</h2>
+    <div class="role-section">
+      <h4>Phase 1: Your Own Tree</h4>
+      <ul>
+        <li>Start from an empty tree — name yourself, then add your first relatives — instead of the built-in sample family</li>
+        <li>Save data with SwiftData, in a shape that can sync through iCloud later, with file protection on</li>
+        <li>Edit and delete people, disconnect relationships, and undo with the system gesture</li>
+        <li>Full VoiceOver labels, a deliberate reading order, a list alternative to the canvas, and Dynamic Type at the largest sizes</li>
+        <li>Choose an App Store name</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">What This Demonstrates</h2>
+    <ul class="bullets">
+      <li><strong>Knowing When to Rebuild:</strong> Stopped adding features to a layout that could only be checked by eye, and rebuilt it as an engine with tests first</li>
+      <li><strong>Domain Modelling:</strong> Reduced family relationships to two stored facts and derived the rest, removing a whole class of inconsistency</li>
+      <li><strong>Separation of Concerns:</strong> Enforced a single boundary between logic and drawing, and kept files small enough to read in one sitting</li>
+      <li><strong>Learning From Defects:</strong> Turned each real layout bug into a written rule and a test</li>
+      <li><strong>Planned Delivery:</strong> Worked from an ordered plan with acceptance criteria, checked on a phone simulator, not just a passing build</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>

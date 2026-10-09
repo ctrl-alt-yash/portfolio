@@ -13,7 +13,8 @@
   <div class="case-study-header">
     <div class="case-study-subtitle">Wedding Photo Platform</div>
     <h1 class="case-study-title">A Face-Searchable Gallery for 7,500 Photographs</h1>
-    <div class="case-study-meta">Solo Engineer · Next.js + Offline ML Pipeline · Jun – Aug 2026</div>
+    <div class="case-study-meta">Solo Engineer · Next.js + Offline ML Pipeline · Jun – Sep 2026</div>
+    <a href="https://wedding-demo-teal.vercel.app/" class="demo-link" target="_blank" rel="noopener noreferrer">Explore the public demo ↗</a>
   </div>
 
   <div class="case-study-section">
@@ -24,6 +25,9 @@
       </p>
       <p>
         The interesting constraint was cost. This runs on a <strong>Cloudflare R2 free tier</strong> with no budget behind it, so deduplication, compression, face recognition, and clustering all happen <strong>offline on a laptop</strong> before anything ships. No per-image API calls, no inference at request time, no recurring bill.
+      </p>
+      <p>
+        The real site is private to the family, so the <strong>public demo</strong> is the version to explore: the same code with a placeholder couple, 1,004 of the photographs across eight event albums, and a People page of 20 — every face frosted, but each person's page still finds every photograph they are in. The pipeline figures below come from the full run, since that is the scale the work was built for.
       </p>
     </div>
 
@@ -109,6 +113,20 @@
       <li>Rewrote the git history to drop bulk media, shrinking the repository from 2.1GB to 2.8MB while preserving 94 of 98 commits</li>
       <li>Set free-tier alert thresholds at 75% of each R2 limit, identifying read operations as the only metric that actually scales with guest traffic</li>
     </ul>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">Public Demo</h2>
+    <div class="role-section">
+      <h4>Showing the Work Without Showing the Wedding</h4>
+      <ul>
+        <li>A second deployment of the same codebase with a placeholder couple and 1,004 real photographs in which every face is frosted, served from a separate bucket and Vercel project</li>
+        <li>Faces are found by three independent detectors — the stored pass, a more sensitive tiled face-api pass, and macOS Vision — because each caught faces the others missed</li>
+        <li>Photos with legible text, crowd shots, or a person whose face no detector boxed are left out rather than risked; masks are baked into new files with EXIF and GPS stripped</li>
+        <li>The demo build swaps in placeholder content, then fails if any name, date, domain, or bucket from the real wedding survives in the output</li>
+        <li>Margin notes with hand-drawn arrows explain the features to a visitor, and they are kept off the real site by construction</li>
+      </ul>
+    </div>
   </div>
 
   <div class="case-study-section">

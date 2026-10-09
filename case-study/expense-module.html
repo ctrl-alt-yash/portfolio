@@ -13,7 +13,8 @@
   <div class="case-study-header">
     <div class="case-study-subtitle">Expense Module</div>
     <h1 class="case-study-title">Reading Handwritten Grocery Slips Into a Household Ledger</h1>
-    <div class="case-study-meta">Solo Engineer · Next.js + Vision LLM · May – Sep 2026</div>
+    <div class="case-study-meta">Solo Engineer · Next.js + Vision LLM · May – Oct 2026</div>
+    <a href="https://tenant-management-2my6.vercel.app/expense" class="demo-link" target="_blank" rel="noopener noreferrer">Try the public demo ↗</a>
   </div>
 
   <div class="case-study-section">
@@ -27,6 +28,9 @@
       </p>
       <p>
         Nothing from the photograph reaches the database directly. Every line lands on a review screen first, uncertain readings are flagged, and the slip's own written total is checked against the sum of the parsed lines.
+      </p>
+      <p>
+        The <strong>public demo</strong> has two years of invented shopping, bills, and wages across categories like Sabzi and Kirana, always ending today, and slip reading works there too: photograph any handwritten list and review the rows it drafts.
       </p>
     </div>
 
@@ -95,6 +99,14 @@
         <div class="highlight-label">Camera Deep Link</div>
         <div class="highlight-text">Installed as a progressive web app with its own manifest, and a dedicated scan route can be saved as its own home-screen icon that opens straight to the camera</div>
       </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Both Sides of the Page</div>
+        <div class="highlight-text">A slip written on front and back is photographed as up to four pictures and read together as one document, so a date written on the front carries onto the back</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Actionable Insights</div>
+        <div class="highlight-text">Insights notice a missing bill, a lapsed regular purchase, or an item logged in two units, and each suggestion carries the button that resolves it on the same row</div>
+      </div>
     </div>
   </div>
 
@@ -105,6 +117,7 @@
       <li>Documented the privacy trade-off honestly in the setup instructions: the free Gemini tier may use submitted images to improve their products, and every scan is a photograph of household spending</li>
       <li>Made the scan feature entirely optional — with no key configured it returns a clear error and the rest of the application is unaffected, because the manual entry sheet was built to be fast on its own</li>
       <li>Treated model output as a draft rather than a result, writing nothing to the database until a human confirms it on a review screen</li>
+      <li>Metered slip reading on the public demo, where the PINs are public and stop nobody: a few reads per visitor an hour, a few more a day, and a shared daily ceiling sized to the free tier, with visitors identified by a keyed hash so no IP address is stored</li>
       <li>Gated the scan endpoint behind a hard server-side authentication check, since each call both reads back household spending and spends money at a paid API</li>
       <li>Kept every derivation — category classification, summary math, percentage breakdowns, analytics — in pure server-side library modules with their own unit tests, rather than computing in components</li>
       <li>Split the logic into focused, individually tested modules for expenses, items, categories, summaries, and analytics, so a change to reporting cannot quietly break entry</li>
@@ -121,6 +134,7 @@
       <li><strong>Human-in-the-Loop by Default:</strong> Put a mandatory review step between model output and persisted data, with confidence flags and a total reconciliation to direct attention</li>
       <li><strong>Honest Privacy Trade-offs:</strong> Wrote down what a free tier does with submitted images so the person enabling it can decide, instead of burying it</li>
       <li><strong>Graceful Optionality:</strong> Built the AI path as an accelerator on top of a manual path that stands alone, so the feature degrades rather than breaks</li>
+      <li><strong>Closing the Loop:</strong> Made every insight end in an action — a pre-filled entry that still needs a second tap to save, because a wrong save cannot be undone without the admin PIN</li>
       <li><strong>Domain Modelling:</strong> Recognised that a photographed page is a multi-day document, not a single receipt, and modelled it that way from the start</li>
     </ul>
   </div>

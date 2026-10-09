@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Velora Rights - Case Study</title>
+  <link rel="stylesheet" href="case-study.css">
+</head>
+
+<body>
+<div class="case-study">
+  <a href="../index.html" class="back-button">← Back to Home</a>
+  <div class="case-study-header">
+    <div class="case-study-subtitle">Velora Rights</div>
+    <h1 class="case-study-title">A Law Practice Website Built to Be Found</h1>
+    <div class="case-study-meta">Solo Developer · Next.js + MDX · Jun – Aug 2026</div>
+    <a href="https://velorarights.com" class="demo-link" target="_blank" rel="noopener noreferrer">Visit velorarights.com ↗</a>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">Overview</h2>
+    <div class="overview-box">
+      <p>
+        The website for Velora Rights, the practice of an Indian intellectual property advocate who publishes educational content on trademarks, copyright, and creator rights. It carries practice-area guides, a blog, an about page, and a careers page for internships.
+      </p>
+      <p>
+        The owner set the priorities explicitly: <strong>being found first</strong>, both by search engines and by AI assistants that cite sources, then ease of editing for a non-technical owner, then visual polish. Every technical decision answers to that order.
+      </p>
+      <p>
+        It worked. Since launch the site has brought in <strong>internship applications and enquiries from prospective clients</strong> through search, with no paid promotion.
+      </p>
+    </div>
+
+    <div class="tech-stack">
+      <span class="tech-badge">Next.js 16</span>
+      <span class="tech-badge">React 19</span>
+      <span class="tech-badge">TypeScript</span>
+      <span class="tech-badge">MDX</span>
+      <span class="tech-badge">Tailwind 4</span>
+      <span class="tech-badge">JSON-LD</span>
+      <span class="tech-badge">Vitest</span>
+      <span class="tech-badge">Playwright</span>
+      <span class="tech-badge">Vercel</span>
+    </div>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">Problem &amp; Solution</h2>
+    <div class="problem-solution-grid">
+      <div class="ps-card problem">
+        <h4>The Problem</h4>
+        <ul>
+          <li>A new practice with no presence beyond an Instagram account</li>
+          <li>Search and AI assistants increasingly decide who gets found</li>
+          <li>The owner needs to publish without a developer each time</li>
+          <li>Bar Council rules forbid advocates from advertising services</li>
+          <li>Thin or broken pages actively hurt search ranking</li>
+        </ul>
+      </div>
+      <div class="ps-card solution">
+        <h4>The Solution</h4>
+        <ul>
+          <li>Every page statically generated, with its full text in the HTML</li>
+          <li>Structured data, an llms.txt, and AI crawlers deliberately allowed</li>
+          <li>Posts written as Markdown files from a template, deployed on push</li>
+          <li>Informational copy only, with a first-visit disclaimer</li>
+          <li>Content validated at build time; stub pages left out</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">Key Highlights</h2>
+    <div class="highlights-grid">
+      <div class="highlight-card">
+        <div class="highlight-label">Search Results</div>
+        <div class="highlight-text">Verified with Google Search Console and Bing Webmaster Tools, with sitemaps submitted and key pages requested for indexing at launch; organic search now brings in internship applications and client enquiries</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Structured Data</div>
+        <div class="highlight-text">JSON-LD for the legal service, the founder, every blog post, breadcrumbs, and FAQs, built from one set of schema builders and emitted through a single escaping component</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Written for AI Assistants</div>
+        <div class="highlight-text">An llms.txt index and an RSS feed generated from the content, and AI crawlers allowed by choice, so assistants can read and cite the articles</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Fully Static</div>
+        <div class="highlight-text">No database, no CMS, no server state; a CI check fails the build if any route stops being statically generated</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Owner-Editable</div>
+        <div class="highlight-text">Posts and practice areas are Markdown files with simple frontmatter and a template, explained in a plain-language guide written for the owner</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Share Cards</div>
+        <div class="highlight-text">A generated Open Graph image for every route, from one branded template, so links shared on social media look intentional</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">Technical Approach</h2>
+    <ul class="bullets">
+      <li>Kept content as portable frontmatter and Markdown, not JavaScript exports, so a visual CMS can be added later without migrating a single post</li>
+      <li>Chose a Markdown compiler that supports YAML frontmatter over Next.js's built-in MDX, which only accepts metadata written as code inside the file — worse for a non-technical editor</li>
+      <li>Made the filename the slug, with no separate field, so a post's URL and its file can never drift apart</li>
+      <li>Validated every post's frontmatter before each build, so a content mistake fails the deploy instead of publishing a broken page</li>
+      <li>Drove the visible breadcrumbs and their structured data from one array, so the two cannot disagree</li>
+      <li>Published only practice areas with real substance — four today — and deliberately deferred the rest, because thin pages are an SEO liability</li>
+      <li>Wrote all copy as information rather than promotion — no "hire me", testimonials, or superlatives — to stay within Bar Council of India Rule 36, with a disclaimer shown on first visit</li>
+      <li>Vendored the font files for share-card generation as WOFF, since the image renderer cannot read the WOFF2 files a site normally serves</li>
+      <li>Traced a site-wide styling failure to an unlayered CSS reset overriding every Tailwind utility, fixed it, and documented the rule so it cannot recur</li>
+      <li>Covered loaders, components, structured data, and generated routes with 17 Vitest files, plus 7 Playwright specs run against a real production build</li>
+      <li>Wrote three audience-specific documents: architecture decisions for future developers, a setup guide, and a step-by-step publishing guide for the owner</li>
+    </ul>
+  </div>
+
+  <div class="case-study-section">
+    <h2 class="case-study-section-title">What This Demonstrates</h2>
+    <ul class="bullets">
+      <li><strong>Measurable Outcome:</strong> Built for discoverability and saw it pay off in real internship applications and client enquiries</li>
+      <li><strong>Priorities Stated, Then Honoured:</strong> Turned the owner's ranking of goals into a default for every trade-off, written down so it outlives the original build</li>
+      <li><strong>Working Within Regulation:</strong> Treated a professional advertising rule as a design constraint on copy and flows, not an afterthought</li>
+      <li><strong>Designing for the Editor:</strong> Picked the content format and tooling for the person who will maintain the site, not the developer</li>
+      <li><strong>Restraint:</strong> Left out a CMS, a database, and placeholder pages until there is a real need for each</li>
+      <li><strong>Verification Beyond the Build:</strong> Checked rendered pages and raw HTML, because the worst bug built and type-checked cleanly</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>
